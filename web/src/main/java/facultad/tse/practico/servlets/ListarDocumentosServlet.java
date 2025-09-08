@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 import facultad.tse.practico.model.Documento;
-import facultad.tse.practico.service.DocumentoEJB;
+import facultad.tse.practico.service.DocumentoEJBLocal;
 
 /**
  * Servlet implementation class ListarDocumentosServlet
@@ -18,7 +18,7 @@ import facultad.tse.practico.service.DocumentoEJB;
 @WebServlet("/ListarDocumentosServlet")
 public class ListarDocumentosServlet extends HttpServlet {
     @EJB
-    private DocumentoEJB docEJB;
+    private DocumentoEJBLocal docEJB;
        
     /**
      * @see HttpServlet#HttpServlet()
