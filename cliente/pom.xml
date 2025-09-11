@@ -1,51 +1,36 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-  <groupId>practicocliente</groupId>
-  <artifactId>practicocliente</artifactId>
+  <groupId>facultad.tse</groupId>
+  <artifactId>practico-cliente</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  
   <dependencies>
+    <!-- Interfaces del EJB (idealmente en un módulo aparte) -->
     <dependency>
       <groupId>facultad.tse</groupId>
       <artifactId>practico-ejb</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <type>ejb</type>
     </dependency>
-    <dependency>
-	  <groupId>com.formdev</groupId>
-	  <artifactId>flatlaf</artifactId>
-	  <version>3.4</version>
-	</dependency>
 
-    <!-- WildFly EJB client -->
-    
-    <!-- Dependencias transversales que suelen necesitarse -->
+    <!-- FlatLaf para el estilo -->
     <dependency>
-        <groupId>org.jboss.xnio</groupId>
-        <artifactId>xnio-api</artifactId>
-        <version>3.8.4.Final</version>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+      <version>3.4</version>
     </dependency>
-    <dependency>
-        <groupId>org.jboss.xnio</groupId>
-        <artifactId>xnio-nio</artifactId>
-        <version>3.8.4.Final</version>
-    </dependency>
-    <dependency>
-        <groupId>org.jboss.logging</groupId>
-        <artifactId>jboss-logging</artifactId>
-        <version>3.5.0.Final</version>
-    </dependency>
-    
-<dependency>
-    <groupId>org.wildfly</groupId>
-    <artifactId>wildfly-naming-client</artifactId>
-    <version>2.0.1.Final</version>
-</dependency>
 
-
-    
+    <!-- Cliente EJB de WildFly (trae todo lo necesario) -->
+    <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-client-all</artifactId>
+      <version>37.0.0.Final</version>
+    </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -55,7 +40,6 @@
           <release>21</release>
         </configuration>
       </plugin>
-      
     </plugins>
   </build>
 </project>

@@ -9,7 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/practico-ejb"/>
@@ -38,6 +37,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Andres/eclipse-workspace/practicocliente/src/lib/wildfly-naming-client-2.0.1.Final.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

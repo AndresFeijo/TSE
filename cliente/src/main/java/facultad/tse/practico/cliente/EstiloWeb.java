@@ -114,17 +114,21 @@ public class EstiloWeb extends JFrame {
             Properties props = new Properties();
             props.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
             props.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+            props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming"); // 🔹 agregado
+            props.put("jboss.naming.client.ejb.context", true);
 
             Context ctx = new InitialContext(props);
 
             service = (DocumentoEJBRemoto) ctx.lookup(
-                    "ejb:/practico-ejb/DocumentoEJB!facultad.tse.practico.service.DocumentoEJBRemoto"
+                "java:jboss/exported/practico/practico-ejb/DocumentoEJB!facultad.tse.practico.service.DocumentoEJBRemoto"
             );
+
         } catch (NamingException e) {
             JOptionPane.showMessageDialog(this, "Error conectando con EJB: " + e.getMessage());
             e.printStackTrace();
         }
     }
+
 
     // ✅ Contenido inicial
     private void mostrarBienvenida() {
