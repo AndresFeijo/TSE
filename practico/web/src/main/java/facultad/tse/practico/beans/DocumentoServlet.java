@@ -1,4 +1,4 @@
-package facultad.tse.practico.servlets;
+package facultad.tse.practico.beans;
 
 import java.io.IOException;
 import java.util.Random;

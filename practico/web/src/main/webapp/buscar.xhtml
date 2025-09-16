@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Buscar Documento</title>
+</h:head>
+
+<h:body>
+	 <div class="d-flex">
+        <ui:include src="/includes/sidebar.xhtml"/>
+        <div class="flex-grow-1">
+            <ui:include src="/includes/header.xhtml"/>
+
+    <h2>Buscar Entidad por ID</h2>
+
+    <h:form>
+        <h:outputLabel for="id" value="ID:"/>
+        <h:inputText id="id" value="#{documentoBean.idBuscar}" required="true">
+            <f:validateLongRange minimum="1"/>
+        </h:inputText>
+        <h:commandButton value="Buscar" action="#{documentoBean.buscar}"/>
+    </h:form>
+
+    <h:panelGroup rendered="#{not empty documentoBean.resultado}">
+        <h3>Resultado:</h3>
+        <p>ID: #{documentoBean.resultado.id}</p>
+        <p>Descripción: #{documentoBean.resultado.descripcion}</p>
+        <p>Paciente: #{documentoBean.resultado.paciente}</p>
+        <p>Fecha: #{documentoBean.resultado.fecha}</p>
+        <p>Observaciones: #{documentoBean.resultado.observaciones}</p>
+    </h:panelGroup>
+
+    <h:panelGroup rendered="#{empty documentoBean.resultado and not empty documentoBean.idBuscar}">
+        <p>No se encontró ninguna entidad con ese ID.</p>
+    </h:panelGroup>
+
+    <h:link value="Volver" outcome="index"/>
+    </div>
+    </div>
+</h:body>
+</html>

@@ -60,6 +60,12 @@
             <type>ejb</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+        <groupId>${project.groupId}</groupId>
+            <artifactId>practico-data</artifactId>
+            <type>ejb</type>
+            <scope>provided</scope>
+        </dependency>
         
 
         <!-- Import the JSF API, we use provided scope as the API is included in WildFly / JBoss EAP -->
