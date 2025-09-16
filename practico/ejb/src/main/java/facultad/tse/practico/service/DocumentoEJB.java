@@ -1,10 +1,11 @@
 package facultad.tse.practico.service;
 
-import facultad.tse.practico.clases.Documento;
-import facultad.tse.practico.controladores.DocLocal;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import java.util.List;
+
+import facultad.tse.practico.clases.Documento;
+import facultad.tse.practico.controladores.DocLocal;
 
 @Stateless
 

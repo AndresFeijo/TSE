@@ -3,7 +3,6 @@ package facultad.tse.practico.service;
 import java.util.List;
 
 import facultad.tse.practico.clases.Documento;
-
 import jakarta.ejb.Local;
 
 @Local
