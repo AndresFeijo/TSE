@@ -4,57 +4,164 @@ import facultad.tse.practico.clases.Documento;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Random;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 
 @Named("documentoBean")
-@RequestScoped
+@ViewScoped
 public class DocumentoBean implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
     @EJB
     private DocumentoEJBLocal service;
 
     private List<Documento> documentos;
     private Documento resultado;
-    private Integer idBuscar;
+    private String id;
+    private String idBuscar;
     private String descripcion;
     private String paciente;
     private String observaciones;
-    
-    public String guardar() {
-        service.agregar(1, paciente, descripcion, observaciones);
-        documentos = service.listar(); // refresca la lista
-        return "listar?faces-redirect=true"; // navega a listar.xhtml
-    }
-
-    // getters y setters
-    public List<Documento> getDocumentos() { return documentos; }
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
-    public String getPaciente() { return paciente; }
-    public void setPaciente(String paciente) { this.paciente = paciente; }
-    public String getObservaciones() { return observaciones; }
-    public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
 
     @PostConstruct
     public void init() {
         documentos = service.listar();
     }
 
+    // Getters y setters
+    public List<Documento> getDocumentos() {
+        return documentos;
+    }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
 
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Documento getResultado() {
+        return resultado;
+    }
+
+    public String getIdBuscar() {
+        return idBuscar;
+    }
+
+    public void setIdBuscar(String idBuscar) {
+        this.idBuscar = idBuscar;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    // Métodos
     public void buscar() {
         if (idBuscar != null) {
-            resultado = service.buscarPorId(idBuscar);
+            resultado = service.buscarPorId(Integer.parseInt(idBuscar));
         }
     }
 
-    public Documento getResultado() { return resultado; }
-    public Integer getIdBuscar() { return idBuscar; }
-    public void setIdBuscar(Integer idBuscar) { this.idBuscar = idBuscar; }
+    public void guardar() {
+        try {
+            if (id != null && existeId(Integer.parseInt(id))) {
+                FacesContext.getCurrentInstance().addMessage("formCrear:messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", 
+                    "El ID " + id + " ya existe. Por favor, ingrese otro ID o deje vacío."));
+                return;
+            }
+
+            if (id == null) id = generarNuevoId().toString();
+
+            service.agregar(Integer.parseInt(id), paciente, descripcion, observaciones);
+            documentos = service.listar();
+            limpiarFormulario();
+
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Documento creado correctamente"));
+
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage("formCrear:messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage()));
+        }
+    }
     
+    /**
+     * Verifica si un ID ya existe en la lista de documentos
+     * @param idAVerificar ID a verificar
+     * @return true si existe, false si no existe
+     */
+    private boolean existeId(Integer idAVerificar) {
+        if (documentos == null || idAVerificar == null) {
+            return false;
+        }
+        
+        return documentos.stream()
+                .anyMatch(doc -> idAVerificar.equals(doc.getId()));
+    }
     
+    /**
+     * Genera un nuevo ID basado en el máximo ID existente + 1
+     * @return Nuevo ID único
+     */
+    private Integer generarNuevoId() {
+        if (documentos == null || documentos.isEmpty()) {
+            return 1; // Primer documento
+        }
+        
+        // Encontrar el ID máximo y sumar 1
+        Integer maxId = documentos.stream()
+                .filter(doc -> doc.getId() != null) // Filtrar documentos con ID válido
+                .mapToInt(Documento::getId)
+                .max()
+                .orElse(0);
+        
+        return maxId + 1;
+    }
+    
+    /**
+     * Limpia todos los campos del formulario
+     */
+    private void limpiarFormulario() {
+        id = null;
+        paciente = null;
+        descripcion = null;
+        observaciones = null;
+    }
+    
+    /**
+     * Método para preparar un nuevo documento
+     * Se llama cuando se hace clic en "Nuevo Documento"
+     */
+    public void nuevoDocumento() {
+        limpiarFormulario();
+        System.out.println("Preparando nuevo documento - campos limpiados");
+    }
 }

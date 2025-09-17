@@ -63,6 +63,7 @@
         <dependency>
         <groupId>${project.groupId}</groupId>
             <artifactId>practico-data</artifactId>
+            <version>${project.version}</version>
             <type>ejb</type>
             <scope>provided</scope>
         </dependency>

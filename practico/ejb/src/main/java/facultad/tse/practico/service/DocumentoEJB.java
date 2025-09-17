@@ -15,8 +15,11 @@ public class DocumentoEJB implements DocumentoEJBLocal, DocumentoEJBRemoto{
 
 // Agregar un documento
 public void agregar(Integer id, String paciente, String descripcion, String observaciones) {
-	if (id == null || paciente.isEmpty()) {
-		throw new IllegalArgumentException("El nombre no puede estar vacío");
+	if (id == null) {
+		throw new IllegalArgumentException("El id no puede estar vacío");
+	}
+	else if (paciente.isEmpty()) {
+		throw new IllegalArgumentException("El paciente no puede estar vacío");
 	}
 	controladorLocal.agregar(id, paciente, descripcion, observaciones);
 }

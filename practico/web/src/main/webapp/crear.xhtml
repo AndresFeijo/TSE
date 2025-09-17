@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Crear Documento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</h:head>
+
+<h:body>
+    <!-- Header -->
+    <ui:include src="/includes/header.xhtml"/>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <ui:include src="/includes/sidebar.xhtml"/>
+
+        <div class="container-fluid p-4">
+            <h3 class="mb-4">Nuevo Documento Clínico</h3>
+
+            <h:form id="formCrear">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <h:outputLabel value="Paciente" for="paciente"/>
+                        <h:inputText id="paciente" value="#{documentoBean.paciente}"
+                                     styleClass="form-control" required="true"
+                                     requiredMessage="El campo Paciente es obligatorio"/>
+                        <h:message for="paciente" styleClass="text-danger"/>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h:outputLabel value="Descripción" for="descripcion"/>
+                        <h:inputText id="descripcion" value="#{documentoBean.descripcion}"
+                                     styleClass="form-control" required="true"
+                                     requiredMessage="El campo Descripción es obligatorio"/>
+                        <h:message for="descripcion" styleClass="text-danger"/>
+                    </div>
+
+                    <div class="col-12">
+                        <h:outputLabel value="Observaciones" for="observaciones"/>
+                        <h:inputTextarea id="observaciones" value="#{documentoBean.observaciones}"
+                                         styleClass="form-control" rows="3"/>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h:commandButton value="Guardar" action="#{documentoBean.guardar}"
+                                     styleClass="btn btn-success me-2"/>
+                    <h:button value="Cancelar" outcome="listar.xhtml"
+                              styleClass="btn btn-secondary"/>
+                </div>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>
