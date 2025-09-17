@@ -17,10 +17,23 @@ public List<Documento> documentos = new ArrayList<>();
 
 // Agregar un documento
 public void agregar(Integer id, String paciente, String descripcion, String observaciones) {
-	if (id != null && !paciente.isEmpty()) {
-    	Documento doc = new Documento(id, LocalDateTime.now(), paciente, descripcion, observaciones);
-        documentos.add(doc);
-	}
+    if (id == null) {
+        throw new IllegalArgumentException("El ID no puede ser nulo.");
+    }
+    
+    if (paciente == null || paciente.isEmpty()) {
+        throw new IllegalArgumentException("El nombre del paciente no puede estar vacío.");
+    }
+
+    // Verificar si el ID ya existe
+    
+    if (buscarPorId(id) != null) {
+        throw new IllegalArgumentException("El ID " + id + " ya está en uso.");
+    }
+
+    // Si todo está bien, crear y agregar el documento
+    Documento doc = new Documento(id, LocalDateTime.now(), paciente, descripcion, observaciones);
+    documentos.add(doc);
 }
 
 // Listar todos los documentos

@@ -19,11 +19,12 @@
 	</dependency>
 
     <!-- WildFly EJB client -->
-    <dependency>
-	  <groupId>org.wildfly</groupId>
-	  <artifactId>wildfly-ejb-client-bom</artifactId>
-	  <version>37.0.0.Final</version> <!-- usá la versión de tu WildFly -->
-	</dependency>	
+	<dependency>
+	    <groupId>org.wildfly</groupId>
+	    <artifactId>wildfly-ejb-client-bom</artifactId>
+	    <version>37.0.0.Final</version>
+	    <type>pom</type>
+	</dependency>
     <!-- Dependencias transversales que suelen necesitarse -->
     <dependency>
         <groupId>org.jboss.xnio</groupId>
@@ -56,7 +57,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.13.0</version>
         <configuration>
-          <release>21</release>
+          <release>17</release>
         </configuration>
       </plugin>
       

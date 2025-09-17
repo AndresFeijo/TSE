@@ -56,13 +56,9 @@ public class EstiloWeb extends JFrame {
         menuTitle.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 10));
 
         JButton btnDocs = crearBotonSidebar("Documentos");
-        JButton btnPacientes = crearBotonSidebar("Pacientes");
-        JButton btnConfig = crearBotonSidebar("Configuración");
 
         sidebar.add(menuTitle);
         sidebar.add(btnDocs);
-        sidebar.add(btnPacientes);
-        sidebar.add(btnConfig);
 
         // CONTENIDO PRINCIPAL
         content = new JPanel(new BorderLayout());
@@ -114,7 +110,7 @@ public class EstiloWeb extends JFrame {
             Properties props = new Properties();
             props.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
             props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-            props.put(Context.PROVIDER_URL, "remote+hhtp://localhost:8080");
+            props.put(Context.PROVIDER_URL, "remote+http://localhost:8080");
             
 
             Context ctx = new InitialContext(props);
