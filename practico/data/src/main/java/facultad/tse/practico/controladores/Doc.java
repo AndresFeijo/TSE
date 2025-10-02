@@ -1,6 +1,8 @@
 package facultad.tse.practico.controladores;
 
 import facultad.tse.practico.clases.Documento;
+import facultad.tse.practico.datatypes.*;
+import facultad.tse.practico.mapper.*;
 
 import jakarta.ejb.Singleton;
 
@@ -16,6 +18,11 @@ public class Doc implements DocLocal, DocRemoto {
 public List<Documento> documentos = new ArrayList<>();
 
 // Agregar un documento
+
+public DTDocumento DocToDTDoc(Documento doc) {
+	return new DTDocumento(doc.getId(), doc.getFecha().toString(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones());
+}
+
 public void agregar(Integer id, String paciente, String descripcion, String observaciones) {
     if (id == null) {
         throw new IllegalArgumentException("El ID no puede ser nulo.");
@@ -37,25 +44,29 @@ public void agregar(Integer id, String paciente, String descripcion, String obse
 }
 
 // Listar todos los documentos
-public List<Documento> listar() {
-    return new ArrayList<>(documentos); 
+public DTListaDocumentos listar() {
+	List<DTDocumento> lista = new ArrayList<>();
+	for (Documento doc : documentos) {
+		lista.add(DocToDTDoc(doc));
+	}
+    return new DTListaDocumentos(lista); 
 }
 
 // Buscar documentos por paciente
-public Documento buscarPorPaciente(String paciente) {
+public DTDocumento buscarPorPaciente(String paciente) {
     for (Documento doc : documentos) {
         if (doc.getPaciente().equalsIgnoreCase(paciente)) {
-            return doc;
+            return DocToDTDoc(doc);
         }
     }
     return null; 
 }
 
 // Buscar por ID
-public Documento buscarPorId(Integer id) {
+public DTDocumento buscarPorId(Integer id) {
     for (Documento doc : documentos) {
         if (doc.getId().equals(id)) {
-            return doc;
+            return DocToDTDoc(doc);
         }
     }
     return null;

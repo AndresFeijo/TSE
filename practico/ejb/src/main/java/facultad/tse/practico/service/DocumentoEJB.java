@@ -4,8 +4,8 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import java.util.List;
 
-import facultad.tse.practico.clases.Documento;
 import facultad.tse.practico.controladores.DocLocal;
+import facultad.tse.practico.datatypes.*;
 
 @Stateless
 
@@ -22,8 +22,8 @@ public void agregar(Integer id, String paciente, String descripcion, String obse
 }
 
 // Listar todos los documentos
-public List<Documento> listar() {
-    return controladorLocal.listar(); 
+public DTListaDocumentos listar() {
+    return controlador.listar(); 
 }
 
 // Buscar documentos por paciente

@@ -1,21 +1,21 @@
-package facultad.tse.practico.clases;
+package facultad.tse.practico.datatypes;
 
 import java.time.LocalDateTime;
 
-public class Documento {
+public class DTDocumento {
 	Integer id;
-	LocalDateTime fecha;
+	String fecha;
 	String paciente, descripcion, observaciones;
 	
-	public Documento() {
+	public DTDocumento() {
 		this.id = 0;
-		this.fecha = LocalDateTime.now();
+		this.fecha = LocalDateTime.now().toString();
 		this.paciente = "";
 		this.descripcion = "";
 		this.observaciones = "";
 	}
 	
-	public Documento(Integer id, LocalDateTime fecha, String paciente, String descripcion, String observaciones) {
+	public DTDocumento(Integer id, String fecha, String paciente, String descripcion, String observaciones) {
 		this.id = id;
 		this.fecha = fecha;
 		this.paciente = paciente;
@@ -28,8 +28,8 @@ public class Documento {
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
-    public LocalDateTime getFecha() { return fecha; }
-    public void setFecha(LocalDateTime fecha) { this.fecha = fecha; }
+    public String getFecha() { return fecha; }
+    public void setFecha(String fecha) { this.fecha = fecha; }
 
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
