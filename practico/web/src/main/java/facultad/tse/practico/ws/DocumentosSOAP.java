@@ -1,15 +1,13 @@
 package facultad.tse.practico.ws;
 
-import javax.jws.WebMethod;
-import javax.jws.WebService;
-
 import facultad.tse.practico.datatypes.DTDocumento;
 import facultad.tse.practico.datatypes.DTListaDocumentos;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.ejb.EJB;
+import jakarta.jws.WebMethod;
+import jakarta.jws.WebService;
 
 @WebService
-
 public class DocumentosSOAP  {
     @EJB DocumentoEJBLocal controladorLocal;
  
