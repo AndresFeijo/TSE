@@ -2,7 +2,6 @@ package facultad.tse.practico.controladores;
 
 import facultad.tse.practico.clases.Documento;
 import facultad.tse.practico.datatypes.*;
-import facultad.tse.practico.mapper.*;
 
 import jakarta.ejb.Singleton;
 
@@ -16,31 +15,38 @@ public class Doc implements DocLocal, DocRemoto {
 	
 //"Base de datos de documentos"
 public List<Documento> documentos = new ArrayList<>();
+private Integer proximoID = 1;
 
 // Agregar un documento
+
+public Doc() {
+	// Carga de datos estaticos
+	this.agregar("Juan Pérez", "Consulta general", "Paciente refiere dolor de cabeza persistente");
+	this.agregar("María Gómez", "Control anual", "Sin observaciones relevantes");
+	this.agregar("Carlos López", "Análisis de sangre", "Esperando resultados del laboratorio");
+	this.agregar("Ana Torres", "Consulta ginecológica", "Paciente menciona ciclos irregulares");
+	this.agregar("Pedro Martínez", "Chequeo post-operatorio", "Cicatriz en buen estado, sin complicaciones");
+	this.agregar("Lucía Fernández", "Consulta pediátrica", "Niño con tos leve desde hace 3 días");
+	this.agregar("Roberto Díaz", "Radiografía de tórax", "Posible neumonía, enviar a especialista");
+	this.agregar("Laura Rodríguez", "Vacunación", "Aplicada dosis de refuerzo contra influenza");
+	this.agregar("Sofía Silva", "Consulta traumatológica", "Esguince leve en tobillo derecho");
+	this.agregar("Martín Castro", "Control odontológico", "Carie tratada en molar superior izquierdo");
+}
 
 public DTDocumento DocToDTDoc(Documento doc) {
 	return new DTDocumento(doc.getId(), doc.getFecha().toString(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones());
 }
 
-public void agregar(Integer id, String paciente, String descripcion, String observaciones) {
-    if (id == null) {
-        throw new IllegalArgumentException("El ID no puede ser nulo.");
-    }
+public void agregar(String paciente, String descripcion, String observaciones) {
     
     if (paciente == null || paciente.isEmpty()) {
         throw new IllegalArgumentException("El nombre del paciente no puede estar vacío.");
     }
 
-    // Verificar si el ID ya existe
-    
-    if (buscarPorId(id) != null) {
-        throw new IllegalArgumentException("El ID " + id + " ya está en uso.");
-    }
-
     // Si todo está bien, crear y agregar el documento
-    Documento doc = new Documento(id, LocalDateTime.now(), paciente, descripcion, observaciones);
+    Documento doc = new Documento(proximoID, LocalDateTime.now(), paciente, descripcion, observaciones);
     documentos.add(doc);
+    proximoID = proximoID + 1;
 }
 
 // Listar todos los documentos
@@ -70,9 +76,5 @@ public DTDocumento buscarPorId(Integer id) {
         }
     }
     return null;
-}
-
+  }
 };
-
-    
-    

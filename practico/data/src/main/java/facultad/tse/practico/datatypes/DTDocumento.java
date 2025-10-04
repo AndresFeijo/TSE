@@ -2,6 +2,10 @@ package facultad.tse.practico.datatypes;
 
 import java.time.LocalDateTime;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+
 public class DTDocumento {
 	Integer id;
 	String fecha;

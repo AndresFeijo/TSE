@@ -1,6 +1,6 @@
 package facultad.tse.practico.beans;
 
-import facultad.tse.practico.clases.Documento;
+import facultad.tse.practico.datatypes.*;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -20,8 +20,8 @@ public class DocumentoBean implements Serializable {
     @EJB
     private DocumentoEJBLocal service;
 
-    private List<Documento> documentos;
-    private Documento resultado;
+    private DTListaDocumentos documentos;
+    private DTDocumento resultado;
     private String id;
     private String idBuscar;
     private String descripcion;
@@ -34,7 +34,7 @@ public class DocumentoBean implements Serializable {
     }
 
     // Getters y setters
-    public List<Documento> getDocumentos() {
+    public DTListaDocumentos getDocumentos() {
         return documentos;
     }
 
@@ -62,7 +62,7 @@ public class DocumentoBean implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public Documento getResultado() {
+    public DTDocumento getResultado() {
         return resultado;
     }
 
@@ -91,16 +91,7 @@ public class DocumentoBean implements Serializable {
 
     public void guardar() {
         try {
-            if (id != null && existeId(Integer.parseInt(id))) {
-                FacesContext.getCurrentInstance().addMessage("formCrear:messages",
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", 
-                    "El ID " + id + " ya existe. Por favor, ingrese otro ID o deje vacío."));
-                return;
-            }
-
-            if (id == null) id = generarNuevoId().toString();
-
-            service.agregar(Integer.parseInt(id), paciente, descripcion, observaciones);
+            service.agregar(paciente, descripcion, observaciones);
             documentos = service.listar();
             limpiarFormulario();
 
@@ -113,42 +104,16 @@ public class DocumentoBean implements Serializable {
         }
     }
     
-    /**
-     * Verifica si un ID ya existe en la lista de documentos
-     * @param idAVerificar ID a verificar
-     * @return true si existe, false si no existe
-     */
     private boolean existeId(Integer idAVerificar) {
         if (documentos == null || idAVerificar == null) {
             return false;
         }
-        
-        return documentos.stream()
-                .anyMatch(doc -> idAVerificar.equals(doc.getId()));
+        DTDocumento doc = service.buscarPorId(idAVerificar);
+        if (doc != null) 
+        	return true;
+        else return false;
     }
     
-    /**
-     * Genera un nuevo ID basado en el máximo ID existente + 1
-     * @return Nuevo ID único
-     */
-    private Integer generarNuevoId() {
-        if (documentos == null || documentos.isEmpty()) {
-            return 1; // Primer documento
-        }
-        
-        // Encontrar el ID máximo y sumar 1
-        Integer maxId = documentos.stream()
-                .filter(doc -> doc.getId() != null) // Filtrar documentos con ID válido
-                .mapToInt(Documento::getId)
-                .max()
-                .orElse(0);
-        
-        return maxId + 1;
-    }
-    
-    /**
-     * Limpia todos los campos del formulario
-     */
     private void limpiarFormulario() {
         id = null;
         paciente = null;

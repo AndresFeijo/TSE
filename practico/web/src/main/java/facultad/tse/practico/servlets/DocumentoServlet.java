@@ -25,14 +25,11 @@ public class DocumentoServlet extends HttpServlet {
             String paciente = req.getParameter("paciente");
             String observaciones = req.getParameter("observaciones");
 
-            service.agregar(new Random().nextInt(10000), paciente, descripcion, observaciones);
+            service.agregar(paciente, descripcion, observaciones);
 
             // si todo sale bien → redirige al listado
             resp.sendRedirect("ListarDocumentosServlet");
         } catch (Exception e) {
-            // log para ver el detalle en servidor
-            e.printStackTrace();
-
             // redirigir a una página de error o mostrar mensaje
             req.setAttribute("error", "No se pudo guardar el documento: " + e.getMessage());
             req.getRequestDispatcher("/error.jsp").forward(req, resp);

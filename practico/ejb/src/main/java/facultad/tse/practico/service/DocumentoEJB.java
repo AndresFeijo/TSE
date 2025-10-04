@@ -11,30 +11,33 @@ import facultad.tse.practico.datatypes.*;
 
 public class DocumentoEJB implements DocumentoEJBLocal, DocumentoEJBRemoto{
 	
-@EJB DocLocal controladorLocal;
+	@EJB DocLocal controladorLocal;
 
-// Agregar un documento
-public void agregar(Integer id, String paciente, String descripcion, String observaciones) {
-	if (id == null || paciente.isEmpty()) {
-		throw new IllegalArgumentException("El nombre no puede estar vacío");
+
+	public DocumentoEJB () {};
+	
+	// Agregar un documento
+	public void agregar(String paciente, String descripcion, String observaciones) {
+		if (paciente.isEmpty()) {
+			throw new IllegalArgumentException("El nombre no puede estar vacío");
+		}
+		controladorLocal.agregar(paciente, descripcion, observaciones);
 	}
-	controladorLocal.agregar(id, paciente, descripcion, observaciones);
-}
-
-// Listar todos los documentos
-public DTListaDocumentos listar() {
-    return controlador.listar(); 
-}
-
-// Buscar documentos por paciente
-public Documento buscarPorPaciente(String paciente) {
-    return controladorLocal.buscarPorPaciente(paciente); 
-}
-
-// Buscar por ID
-public Documento buscarPorId(Integer id) {
-    return controladorLocal.buscarPorId(id);
-}
+	
+	// Listar todos los documentos
+	public DTListaDocumentos listar() {
+	    return controladorLocal.listar(); 
+	}
+	
+	// Buscar documentos por paciente
+	public DTDocumento buscarPorPaciente(String paciente) {
+	    return controladorLocal.buscarPorPaciente(paciente); 
+	}
+	
+	// Buscar por ID
+	public DTDocumento buscarPorId(Integer id) {
+	    return controladorLocal.buscarPorId(id);
+	}
 
 };
 
