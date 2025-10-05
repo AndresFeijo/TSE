@@ -1,7 +1,9 @@
 package facultad.tse.practico.cliente;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import facultad.tse.practico.service.DocumentoEJBRemoto;
+import facultad.tse.practico.cliente.NuevoDocumentoPanel;
+import facultad.tse.practico.ws.DocumentosSOAP;
+import facultad.tse.practico.ws.DocumentosSOAPService;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -10,12 +12,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Properties;
 
-public class EstiloWeb extends JFrame {
-    private DocumentoEJBRemoto service;
+public class Main extends JFrame {
     private JPanel content; // Panel principal dinámico
+    private DocumentosSOAP service;
 
-    public EstiloWeb() {
-        conectarEJB();
+    public Main() {
+    	this.service = invokeSoapWebService();
 
         setTitle("Consultorio TSE - Cliente Swing");
         setSize(1000, 600);
@@ -104,27 +106,6 @@ public class EstiloWeb extends JFrame {
         content.repaint();
     }
 
-    
-    private void conectarEJB() {
-        try {
-            Properties props = new Properties();
-            props.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
-            props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
-            props.put(Context.PROVIDER_URL, "remote+http://localhost:8080");
-            
-
-            Context ctx = new InitialContext(props);
-            
-            String jdniname =  
-            		"ejb:practico/practico-ejb/DocumentoEJB!facultad.tse.practico.service.DocumentoEJBRemoto";
-            
-            service = (DocumentoEJBRemoto) ctx.lookup(jdniname);
-        } catch (NamingException e) {
-            JOptionPane.showMessageDialog(this, "Error conectando con EJB: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     // ✅ Contenido inicial
     private void mostrarBienvenida() {
         content.removeAll();
@@ -177,11 +158,16 @@ public class EstiloWeb extends JFrame {
         content.revalidate();
         content.repaint();
     }
+    
+    private static DocumentosSOAP invokeSoapWebService() {
+    	DocumentosSOAPService webservice = new DocumentosSOAPService();
+    	return webservice.getDocumentosSOAPPort();
+    }
 
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (Exception ignored) {}
-        SwingUtilities.invokeLater(() -> new EstiloWeb().setVisible(true));
+        SwingUtilities.invokeLater(() -> new Main().setVisible(true));
     }
 }

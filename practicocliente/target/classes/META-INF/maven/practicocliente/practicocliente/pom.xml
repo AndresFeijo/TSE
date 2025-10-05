@@ -48,6 +48,35 @@
     <version>2.0.1.Final</version>
 </dependency>
 
+<!-- 🔹 API de JAX-WS (para RequestWrapper, ResponseWrapper, etc.) -->
+<dependency>
+  <groupId>javax.xml.ws</groupId>
+  <artifactId>jaxws-api</artifactId>
+  <version>2.3.1</version>
+</dependency>
+
+<!-- 🔹 Implementación de JAX-WS (runtime CXF o Metro, elegimos Metro que es la estándar de referencia) -->
+<dependency>
+  <groupId>com.sun.xml.ws</groupId>
+  <artifactId>rt</artifactId>
+  <version>2.3.3</version>
+</dependency>
+
+<!-- 🔹 API de JAXB (para javax.xml.bind.*) -->
+<dependency>
+  <groupId>javax.xml.bind</groupId>
+  <artifactId>jaxb-api</artifactId>
+  <version>2.3.1</version>
+</dependency>
+
+<!-- 🔹 Implementación de JAXB -->
+<dependency>
+  <groupId>org.glassfish.jaxb</groupId>
+  <artifactId>jaxb-runtime</artifactId>
+  <version>2.3.1</version>
+</dependency>
+
+
 
     
   </dependencies>
@@ -60,7 +89,27 @@
           <release>17</release>
         </configuration>
       </plugin>
-      
+      <plugin>
+	      <groupId>org.codehaus.mojo</groupId>
+	      <artifactId>jaxws-maven-plugin</artifactId>
+	      <version>2.6</version>
+	      <configuration>
+	      	<packagename>facultad.tse.practico.cliente.ws</packagename>
+	      	<sourceDestDir>
+	      		${project.basedir}/src/main/java
+	      	</sourceDestDir>
+	      	<wsdlUrls>
+	      		<wsdlUrl>http://localhost:8080/practico-web/DocumentosSOAP?wsdl</wsdlUrl>
+	      	</wsdlUrls>
+	      </configuration>
+	      <executions>
+		      <execution>
+		      	<goals>
+		      		<goal>wsimport</goal>
+		      	</goals>
+		      </execution>
+	      </executions>
+      </plugin>
     </plugins>
   </build>
 </project>

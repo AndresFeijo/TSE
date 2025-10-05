@@ -1,8 +1,6 @@
 package facultad.tse.practico.cliente;
 
-import facultad.tse.practico.cliente.es.DtDocumento;
-import facultad.tse.practico.datatypes.DTListaDocumentos;
-import facultad.tse.practico.service.DocumentoEJBRemoto;
+import facultad.tse.practico.ws.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,12 +11,12 @@ import java.util.List;
 import java.beans.Beans;
 
 public class DocumentoPanel extends JPanel {
-    private DocumentoEJBRemoto service;
+    private DocumentosSOAP service;
     private DefaultTableModel tableModel;
     private JTextField txtBuscar;
 
-    public DocumentoPanel(DocumentoEJBRemoto service) {
-        this.service = service;
+    public DocumentoPanel(DocumentosSOAP service) {
+    	this.service = service;
         setLayout(new BorderLayout());
         setBackground(new Color(245, 247, 250));
 
@@ -67,7 +65,7 @@ public class DocumentoPanel extends JPanel {
                 refrescarTabla();
                 return;
             }
-            DTDocumento doc = service.buscarPorId(Integer.parseInt(filtro));
+            DtDocumento doc = service.buscarPorId(Integer.parseInt(filtro));
             if (doc != null) {
                 tableModel.addRow(new Object[]{
                         doc.getId(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones()
@@ -78,10 +76,10 @@ public class DocumentoPanel extends JPanel {
 
     private void refrescarTabla() {
         try {
-        	DTListaDocumentos docs = service.listar();
-            List<DTDocumento> documentos = docs.obtenerLista();
+        	DtListaDocumentos docs = service.listar();
+            List<DtDocumento> documentos = docs.getDocumentos();
             tableModel.setRowCount(0);
-            for (DTDocumento doc : documentos) {
+            for (DtDocumento doc : documentos) {
                 tableModel.addRow(new Object[]{
                         doc.getId(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones()
                 });
@@ -90,4 +88,6 @@ public class DocumentoPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Error cargando documentos: " + ex.getMessage());
         }
     }
+    
+
 }

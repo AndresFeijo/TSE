@@ -1,16 +1,16 @@
 package facultad.tse.practico.cliente;
 
-import facultad.tse.practico.service.DocumentoEJBRemoto;
+import facultad.tse.practico.ws.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.beans.Beans;
 
 public class NuevoDocumentoPanel extends JPanel {
-    private DocumentoEJBRemoto service;
+    private DocumentosSOAP service;
     private JTextField txtId, txtPaciente, txtDescripcion, txtObservaciones;
 
-    public NuevoDocumentoPanel(DocumentoEJBRemoto service) {
+    public NuevoDocumentoPanel(DocumentosSOAP service) {
         this.service = service;
         setLayout(new GridLayout(5, 2, 5, 5));
         setBorder(BorderFactory.createTitledBorder("Agregar Documento"));
