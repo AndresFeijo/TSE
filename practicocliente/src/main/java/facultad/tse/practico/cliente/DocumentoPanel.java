@@ -1,6 +1,7 @@
 package facultad.tse.practico.cliente;
 
-import facultad.tse.practico.clases.Documento;
+import facultad.tse.practico.cliente.es.DtDocumento;
+import facultad.tse.practico.datatypes.DTListaDocumentos;
 import facultad.tse.practico.service.DocumentoEJBRemoto;
 
 import javax.swing.*;
@@ -66,7 +67,7 @@ public class DocumentoPanel extends JPanel {
                 refrescarTabla();
                 return;
             }
-            Documento doc = service.buscarPorId(Integer.parseInt(filtro));
+            DTDocumento doc = service.buscarPorId(Integer.parseInt(filtro));
             if (doc != null) {
                 tableModel.addRow(new Object[]{
                         doc.getId(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones()
@@ -77,9 +78,10 @@ public class DocumentoPanel extends JPanel {
 
     private void refrescarTabla() {
         try {
-            List<Documento> documentos = service.listar();
+        	DTListaDocumentos docs = service.listar();
+            List<DTDocumento> documentos = docs.obtenerLista();
             tableModel.setRowCount(0);
-            for (Documento doc : documentos) {
+            for (DTDocumento doc : documentos) {
                 tableModel.addRow(new Object[]{
                         doc.getId(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones()
                 });

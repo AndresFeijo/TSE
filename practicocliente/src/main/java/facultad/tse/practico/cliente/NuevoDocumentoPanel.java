@@ -16,13 +16,10 @@ public class NuevoDocumentoPanel extends JPanel {
         setBorder(BorderFactory.createTitledBorder("Agregar Documento"));
         setBackground(new Color(245, 247, 250));
 
-        txtId = new JTextField();
         txtPaciente = new JTextField();
         txtDescripcion = new JTextField();
         txtObservaciones = new JTextField();
 
-        add(new JLabel("ID:"));
-        add(txtId);
         add(new JLabel("Paciente:"));
         add(txtPaciente);
         add(new JLabel("Descripción:"));
@@ -40,7 +37,6 @@ public class NuevoDocumentoPanel extends JPanel {
 
         // ⚡ Preview dummy en WindowBuilder
         if (Beans.isDesignTime()) {
-            txtId.setText("1");
             txtPaciente.setText("Nombre Paciente");
             txtDescripcion.setText("Descripción ejemplo");
             txtObservaciones.setText("Observaciones ejemplo");
@@ -49,13 +45,12 @@ public class NuevoDocumentoPanel extends JPanel {
 
     private void agregarDocumento() {
         try {
-            int id = Integer.parseInt(txtId.getText());
             String paciente = txtPaciente.getText();
             String descripcion = txtDescripcion.getText();
             String observaciones = txtObservaciones.getText();
 
             if (!Beans.isDesignTime() && service != null) {
-                service.agregar(id, paciente, descripcion, observaciones);
+                service.agregar(paciente, descripcion, observaciones);
             }
 
             JOptionPane.showMessageDialog(this, "Documento agregado!");

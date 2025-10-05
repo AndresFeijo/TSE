@@ -60,7 +60,27 @@
           <release>17</release>
         </configuration>
       </plugin>
-      
+      <plugin>
+	      <groupId>org.codehaus.mojo</groupId>
+	      <artifactId>jaxws-maven-plugin</artifactId>
+	      <version>2.6</version>
+	      <configuration>
+	      	<packagename>facultad.tse.practico.cliente.ws</packagename>
+	      	<sourceDestDir>
+	      		${project.build.directory}/generated-sources/
+	      	</sourceDestDir>
+	      	<wsdlUrls>
+	      		<wsdlUrl>http://localhost:8080/practico-web/DocumentosSOAP?wsdl</wsdlUrl>
+	      	</wsdlUrls>
+	      </configuration>
+	      <executions>
+		      <execution>
+		      	<goals>
+		      		<goal>wsimport</goal>
+		      	</goals>
+		      </execution>
+	      </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
