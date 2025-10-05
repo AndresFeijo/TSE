@@ -48,6 +48,25 @@
     <version>2.0.1.Final</version>
 </dependency>
 
+<dependency>
+    <groupId>jakarta.ws.rs</groupId>
+    <artifactId>jakarta.ws.rs-api</artifactId>
+    <version>3.1.0</version>
+    <scope>provided</scope> <!-- o compile si lo probás standalone -->
+</dependency>
+
+<dependency>
+    <groupId>org.glassfish.jersey.core</groupId>
+    <artifactId>jersey-client</artifactId>
+    <version>3.1.2</version>
+</dependency>
+<dependency>
+    <groupId>org.glassfish.jersey.inject</groupId>
+    <artifactId>jersey-hk2</artifactId>
+    <version>3.1.2</version>
+</dependency>
+
+
 <!-- 🔹 API de JAX-WS (para RequestWrapper, ResponseWrapper, etc.) -->
 <dependency>
   <groupId>javax.xml.ws</groupId>
