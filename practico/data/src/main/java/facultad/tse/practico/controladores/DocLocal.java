@@ -11,7 +11,7 @@ public interface DocLocal {
 	public DTListaDocumentos documentos = new DTListaDocumentos();
 	
 // Agregar un documento
-	public void agregar(String paciente, String descripcion, String observaciones) ;
+	public DTDocumento agregar(String paciente, String descripcion, String observaciones) ;
 	
 // Listar todos los documentos
 	public DTListaDocumentos listar();
