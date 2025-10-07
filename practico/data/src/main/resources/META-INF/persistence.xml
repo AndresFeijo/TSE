@@ -10,46 +10,20 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     
         <!-- El DataSource que configuramos en WildFly -->
-        <jta-data-source>java:jboss/datasources/PracticoDS</jta-data-source>
+        <jta-data-source>java:/DocumentosDS</jta-data-source>
         
 
         
         <!-- Listar explícitamente las entidades (buena práctica) -->
-        <class>facultad.tse.practico.entities.DocumentoEntity</class>
+        <class>facultad.tse.practico.jpa.entities.Documento</class>
         
         <!-- Excluir clases no listadas -->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         
         <properties>
-            <!-- Configuración de Hibernate -->
-            
-            <!-- Dialecto de PostgreSQL -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            
-            <!-- Estrategia de generación del schema:
-                 - create: Borra y crea las tablas cada vez (DESARROLLO)
-                 - create-drop: Crea al inicio, borra al final
-                 - update: Actualiza el schema sin borrar datos (RECOMENDADO PARA DESARROLLO)
-                 - validate: Solo valida que el schema coincida
-                 - none: No hace nada (PRODUCCIÓN)
-            -->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-            
-            <!-- Mostrar SQL en consola (útil para debug) -->
-            <property name="hibernate.show_sql" value="true"/>
-            
-            <!-- Formatear SQL en consola -->
-            <property name="hibernate.format_sql" value="true"/>
-            
-            <!-- Comentarios en SQL generado -->
-            <property name="hibernate.use_sql_comments" value="true"/>
-            
-            <!-- Estadísticas de Hibernate -->
-            <property name="hibernate.generate_statistics" value="false"/>
-            
-            <!-- Manejo de transacciones JTA -->
-            <property name="hibernate.transaction.jta.platform" 
-                      value="org.hibernate.engine.transaction.jta.platform.internal.JBossAppServerJtaPlatform"/>
+            <property name="jakarta.persitence.schema-generation.database.action" value="Drop-and-create"/>
+
         </properties>
     </persistence-unit>
 </persistence>

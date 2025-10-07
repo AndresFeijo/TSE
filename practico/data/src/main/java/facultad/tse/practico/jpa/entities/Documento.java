@@ -26,7 +26,8 @@ import java.time.LocalDateTime;
         query = "SELECT d FROM DocumentoEntity d WHERE d.id = :id"
     )
 })
-public class DocumentoEntity implements Serializable {
+
+public class Documento implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
@@ -69,14 +70,14 @@ public class DocumentoEntity implements Serializable {
     
     // Constructores
     
-    public DocumentoEntity() {
+    public Documento() {
         this.fecha = LocalDateTime.now();
         this.paciente = "";
         this.descripcion = "";
         this.observaciones = "";
     }
     
-    public DocumentoEntity(LocalDateTime fecha, String paciente, String descripcion, String observaciones) {
+    public Documento(LocalDateTime fecha, String paciente, String descripcion, String observaciones) {
         this.fecha = fecha;
         this.paciente = paciente;
         this.descripcion = descripcion;
@@ -150,8 +151,8 @@ public class DocumentoEntity implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof DocumentoEntity)) return false;
-        DocumentoEntity that = (DocumentoEntity) o;
+        if (!(o instanceof Documento)) return false;
+        Documento that = (Documento) o;
         return id != null && id.equals(that.id);
     }
     

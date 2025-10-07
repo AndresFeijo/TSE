@@ -1,6 +1,6 @@
 package facultad.tse.practico.dao;
 
-import facultad.tse.practico.jpa.entities.DocumentoEntity;
+import facultad.tse.practico.jpa.entities.Documento;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,7 +26,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     private EntityManager entityManager;
     
     @Override
-    public DocumentoEntity create(DocumentoEntity documento) {
+    public Documento create(Documento documento) {
         logger.info("Creando nuevo documento para paciente: " + documento.getPaciente());
         entityManager.persist(documento);
         entityManager.flush(); // Forzar la generación del ID
@@ -35,9 +35,9 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     }
     
     @Override
-    public DocumentoEntity update(DocumentoEntity documento) {
+    public Documento update(Documento documento) {
         logger.info("Actualizando documento ID: " + documento.getId());
-        DocumentoEntity updated = entityManager.merge(documento);
+        Documento updated = entityManager.merge(documento);
         entityManager.flush();
         return updated;
     }
@@ -45,7 +45,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     @Override
     public boolean delete(Integer id) {
         logger.info("Intentando eliminar documento ID: " + id);
-        DocumentoEntity documento = entityManager.find(DocumentoEntity.class, id);
+        Documento documento = entityManager.find(Documento.class, id);
         if (documento != null) {
             entityManager.remove(documento);
             logger.info("Documento eliminado exitosamente");
@@ -56,28 +56,28 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     }
     
     @Override
-    public Optional<DocumentoEntity> findById(Integer id) {
+    public Optional<Documento> findById(Integer id) {
         logger.info("Buscando documento por ID: " + id);
-        DocumentoEntity documento = entityManager.find(DocumentoEntity.class, id);
+        Documento documento = entityManager.find(Documento.class, id);
         return Optional.ofNullable(documento);
     }
     
     @Override
-    public List<DocumentoEntity> findAll() {
+    public List<Documento> findAll() {
         logger.info("Obteniendo todos los documentos");
-        TypedQuery<DocumentoEntity> query = entityManager.createNamedQuery(
+        TypedQuery<Documento> query = entityManager.createNamedQuery(
             "DocumentoEntity.findAll", 
-            DocumentoEntity.class
+            Documento.class
         );
         return query.getResultList();
     }
     
     @Override
-    public List<DocumentoEntity> findByPaciente(String paciente) {
+    public List<Documento> findByPaciente(String paciente) {
         logger.info("Buscando documentos por paciente: " + paciente);
-        TypedQuery<DocumentoEntity> query = entityManager.createNamedQuery(
+        TypedQuery<Documento> query = entityManager.createNamedQuery(
             "DocumentoEntity.findByPaciente", 
-            DocumentoEntity.class
+            Documento.class
         );
         query.setParameter("paciente", "%" + paciente + "%");
         return query.getResultList();

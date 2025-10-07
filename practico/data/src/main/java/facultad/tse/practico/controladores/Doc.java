@@ -1,10 +1,7 @@
 package facultad.tse.practico.controladores;
 
 import facultad.tse.practico.dao.DocumentoDAO;
-import facultad.tse.practico.datatypes.DTDocumento;
-import facultad.tse.practico.datatypes.DTListaDocumentos;
-import facultad.tse.practico.jpa.entities.DocumentoEntity;
-import facultad.tse.practico.mapper.DocumentoMapper;
+import facultad.tse.practico.jpa.entities.Documento;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -30,10 +27,6 @@ public class Doc implements DocLocal, DocRemoto {
     // Inyección del DAO para acceso a datos
     @EJB
     private DocumentoDAO documentoDAO;
-    
-    // Inyección del Mapper para conversiones
-    @EJB
-    private DocumentoMapper mapper;
     
     /**
      * Constructor por defecto
@@ -88,7 +81,7 @@ public class Doc implements DocLocal, DocRemoto {
      * @return DTO del documento creado
      * @throws IllegalArgumentException si el paciente es nulo o vacío
      */
-    public DTDocumento agregar(String paciente, String descripcion, String observaciones) {
+    public void agregar(String paciente, String descripcion, String observaciones) {
         logger.info("Agregando nuevo documento para paciente: " + paciente);
         
         // Validación
@@ -97,17 +90,15 @@ public class Doc implements DocLocal, DocRemoto {
         }
         
         // Crear la entidad
-        DocumentoEntity entity = new DocumentoEntity();
+        Documento entity = new Documento();
         entity.setFecha(LocalDateTime.now());
         entity.setPaciente(paciente);
         entity.setDescripcion(descripcion != null ? descripcion : "");
         entity.setObservaciones(observaciones != null ? observaciones : "");
         
         // Persistir en la base de datos
-        DocumentoEntity creado = documentoDAO.create(entity);
+        Documento creado = documentoDAO.create(entity);
         
-        // Convertir a DTO y retornar
-        return mapper.entityToDTO(creado);
     }
     
     /**
@@ -116,18 +107,12 @@ public class Doc implements DocLocal, DocRemoto {
      * @return Lista de DTOs de documentos
      */
     @Override
-    public DTListaDocumentos listar() {
+    public List<Documento> listar() {
         logger.info("Listando todos los documentos");
         
         // Obtener todas las entidades
-        List<DocumentoEntity> entities = documentoDAO.findAll();
+        return documentoDAO.findAll();
         
-        // Convertir a DTOs
-        List<DTDocumento> dtos = entities.stream()
-                .map(mapper::entityToDTO)
-                .collect(Collectors.toList());
-        
-        return new DTListaDocumentos(dtos);
     }
     
     /**
@@ -137,7 +122,7 @@ public class Doc implements DocLocal, DocRemoto {
      * @return DTO del primer documento encontrado, o null si no hay coincidencias
      */
     @Override
-    public DTDocumento buscarPorPaciente(String paciente) {
+    public Documento buscarPorPaciente(String paciente) {
         logger.info("Buscando documento por paciente: " + paciente);
         
         if (paciente == null || paciente.trim().isEmpty()) {
@@ -145,11 +130,11 @@ public class Doc implements DocLocal, DocRemoto {
         }
         
         // Buscar en la base de datos
-        List<DocumentoEntity> entities = documentoDAO.findByPaciente(paciente);
+        List<Documento> entities = documentoDAO.findByPaciente(paciente);
         
         // Retornar el primero encontrado (o null si la lista está vacía)
         if (!entities.isEmpty()) {
-            return mapper.entityToDTO(entities.get(0));
+            return entities.get(0);
         }
         
         return null;
@@ -161,16 +146,11 @@ public class Doc implements DocLocal, DocRemoto {
      * @param paciente Nombre o parte del nombre del paciente
      * @return Lista de DTOs de documentos que coinciden
      */
-    public DTListaDocumentos buscarTodosPorPaciente(String paciente) {
+    public List<Documento> buscarTodosPorPaciente(String paciente) {
         logger.info("Buscando todos los documentos por paciente: " + paciente);
         
-        List<DocumentoEntity> entities = documentoDAO.findByPaciente(paciente);
-        
-        List<DTDocumento> dtos = entities.stream()
-                .map(mapper::entityToDTO)
-                .collect(Collectors.toList());
-        
-        return new DTListaDocumentos(dtos);
+        return documentoDAO.findByPaciente(paciente);
+ 
     }
     
     /**
@@ -180,16 +160,16 @@ public class Doc implements DocLocal, DocRemoto {
      * @return DTO del documento encontrado, o null si no existe
      */
     @Override
-    public DTDocumento buscarPorId(Integer id) {
+    public Documento buscarPorId(Integer id) {
         logger.info("Buscando documento por ID: " + id);
         
         if (id == null) {
             return null;
         }
         
-        Optional<DocumentoEntity> entity = documentoDAO.findById(id);
+        Optional<Documento> entity = documentoDAO.findById(id);
         
-        return entity.map(mapper::entityToDTO).orElse(null);
+        return entity.orElse(null);
     }
     
     /**
@@ -199,27 +179,24 @@ public class Doc implements DocLocal, DocRemoto {
      * @return DTO del documento actualizado
      * @throws IllegalArgumentException si el ID es nulo o el documento no existe
      */
-    public DTDocumento actualizar(DTDocumento dto) {
-        logger.info("Actualizando documento ID: " + dto.getId());
+    public Documento actualizar(Documento entity) {
+        logger.info("Actualizando documento ID: " + entity.getId());
         
-        if (dto.getId() == null) {
+        if (entity.getId() == null) {
             throw new IllegalArgumentException("El ID del documento no puede ser nulo.");
         }
         
         // Verificar que el documento existe
-        Optional<DocumentoEntity> existente = documentoDAO.findById(dto.getId());
+        Optional<Documento> existente = documentoDAO.findById(entity.getId());
         if (!existente.isPresent()) {
-            throw new IllegalArgumentException("Documento con ID " + dto.getId() + " no encontrado.");
+            throw new IllegalArgumentException("Documento con ID " + entity.getId() + " no encontrado.");
         }
         
-        // Convertir DTO a Entity
-        DocumentoEntity entity = mapper.dtoToEntity(dto);
         
         // Actualizar en la base de datos
-        DocumentoEntity actualizado = documentoDAO.update(entity);
+        Documento actualizado = documentoDAO.update(entity);
         
-        // Convertir de vuelta a DTO
-        return mapper.entityToDTO(actualizado);
+        return actualizado;
     }
     
     /**
@@ -247,21 +224,5 @@ public class Doc implements DocLocal, DocRemoto {
         return documentoDAO.count();
     }
     
-    /**
-     * Método helper para convertir de Documento a DTDocumento
-     * (Mantenido por compatibilidad, aunque ya no se usa internamente)
-     * 
-     * @deprecated Usar DocumentoMapper en su lugar
-     */
-    @Deprecated
-    public DTDocumento DocToDTDoc(facultad.tse.practico.clases.Documento doc) {
-        if (doc == null) return null;
-        return new DTDocumento(
-            doc.getId(), 
-            doc.getFecha() != null ? doc.getFecha().toString() : "", 
-            doc.getPaciente(), 
-            doc.getDescripcion(), 
-            doc.getObservaciones()
-        );
-    }
+
 }
