@@ -11,19 +11,18 @@ import java.time.LocalDateTime;
  * Esta clase está mapeada a la tabla "documentos" en PostgreSQL.
  */
 @Entity
-@Table(name = "documentos")
 @NamedQueries({
     @NamedQuery(
-        name = "DocumentoEntity.findAll",
-        query = "SELECT d FROM DocumentoEntity d ORDER BY d.fecha DESC"
+        name = "Documento.findAll",
+        query = "SELECT d FROM Documento d ORDER BY d.fecha DESC"
     ),
     @NamedQuery(
-        name = "DocumentoEntity.findByPaciente",
-        query = "SELECT d FROM DocumentoEntity d WHERE d.paciente LIKE :paciente ORDER BY d.fecha DESC"
+        name = "Documento.findByPaciente",
+        query = "SELECT d FROM Documento d WHERE d.paciente LIKE :paciente ORDER BY d.fecha DESC"
     ),
     @NamedQuery(
-        name = "DocumentoEntity.findById",
-        query = "SELECT d FROM DocumentoEntity d WHERE d.id = :id"
+        name = "Documento.findById",
+        query = "SELECT d FROM Documento d WHERE d.id = :id"
     )
 })
 
@@ -163,7 +162,7 @@ public class Documento implements Serializable {
     
     @Override
     public String toString() {
-        return "DocumentoEntity{" +
+        return "Documento{" +
                 "id=" + id +
                 ", fecha=" + fecha +
                 ", paciente='" + paciente + '\'' +

@@ -12,17 +12,12 @@
         <!-- El DataSource que configuramos en WildFly -->
         <jta-data-source>java:/DocumentosDS</jta-data-source>
         
-
-        
-        <!-- Listar explícitamente las entidades (buena práctica) -->
-        <class>facultad.tse.practico.jpa.entities.Documento</class>
-        
         <!-- Excluir clases no listadas -->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="jakarta.persitence.schema-generation.database.action" value="Drop-and-create"/>
+            <property name="jakarta.persitence.schema-generation.database.action" value="drop-and-create"/>
 
         </properties>
     </persistence-unit>

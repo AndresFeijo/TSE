@@ -66,7 +66,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public List<Documento> findAll() {
         logger.info("Obteniendo todos los documentos");
         TypedQuery<Documento> query = entityManager.createNamedQuery(
-            "DocumentoEntity.findAll", 
+            "Documento.findAll", 
             Documento.class
         );
         return query.getResultList();
@@ -76,7 +76,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public List<Documento> findByPaciente(String paciente) {
         logger.info("Buscando documentos por paciente: " + paciente);
         TypedQuery<Documento> query = entityManager.createNamedQuery(
-            "DocumentoEntity.findByPaciente", 
+            "Documento.findByPaciente", 
             Documento.class
         );
         query.setParameter("paciente", "%" + paciente + "%");
@@ -87,7 +87,7 @@ public class DocumentoDAOImpl implements DocumentoDAO {
     public long count() {
         logger.info("Contando total de documentos");
         TypedQuery<Long> query = entityManager.createQuery(
-            "SELECT COUNT(d) FROM DocumentoEntity d", 
+            "SELECT COUNT(d) FROM Documento d", 
             Long.class
         );
         return query.getSingleResult();
