@@ -5,7 +5,7 @@ import jakarta.ejb.Stateless;
 import java.util.List;
 
 import facultad.tse.practico.controladores.DocLocal;
-import facultad.tse.practico.datatypes.*;
+import facultad.tse.practico.jpa.entities.Documento;
 
 @Stateless
 
@@ -25,17 +25,17 @@ public class DocumentoEJB implements DocumentoEJBLocal, DocumentoEJBRemoto{
 	}
 	
 	// Listar todos los documentos
-	public DTListaDocumentos listar() {
+	public List<Documento> listar() {
 	    return controladorLocal.listar(); 
 	}
 	
 	// Buscar documentos por paciente
-	public DTDocumento buscarPorPaciente(String paciente) {
+	public Documento buscarPorPaciente(String paciente) {
 	    return controladorLocal.buscarPorPaciente(paciente); 
 	}
 	
 	// Buscar por ID
-	public DTDocumento buscarPorId(Integer id) {
+	public Documento buscarPorId(Integer id) {
 	    return controladorLocal.buscarPorId(id);
 	}
 

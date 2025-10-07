@@ -1,7 +1,8 @@
 package facultad.tse.practico.ws;
 
-import facultad.tse.practico.datatypes.DTDocumento;
-import facultad.tse.practico.datatypes.DTListaDocumentos;
+import java.util.List;
+
+import facultad.tse.practico.jpa.entities.Documento;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.ejb.EJB;
 import jakarta.jws.WebMethod;
@@ -24,21 +25,21 @@ public class DocumentosSOAP  {
     @WebMethod
  	
  	// Listar todos los documentos
- 	public DTListaDocumentos listar() {
+ 	public List<Documento> listar() {
  	    return controladorLocal.listar(); 
  	}
     
     @WebMethod
  	
  	// Buscar documentos por paciente
- 	public DTDocumento buscarPorPaciente(String paciente) {
+ 	public Documento buscarPorPaciente(String paciente) {
  	    return controladorLocal.buscarPorPaciente(paciente); 
  	}
  	
     @WebMethod
     
  	// Buscar por ID
- 	public DTDocumento buscarPorId(Integer id) {
+ 	public Documento buscarPorId(Integer id) {
  	    return controladorLocal.buscarPorId(id);
  	}
 

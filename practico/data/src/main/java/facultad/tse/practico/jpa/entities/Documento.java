@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
  * Esta clase está mapeada a la tabla "documentos" en PostgreSQL.
  */
 @Entity
+@Table(name="documentos")
 @NamedQueries({
     @NamedQuery(
         name = "Documento.findAll",
-        query = "SELECT d FROM Documento d ORDER BY d.fecha DESC"
+        query = "SELECT d FROM Documento d ORDER BY d.id ASC"
     ),
     @NamedQuery(
         name = "Documento.findByPaciente",
@@ -50,7 +51,7 @@ public class Documento implements Serializable {
      */
     @NotNull(message = "El paciente no puede ser nulo")
     @Size(min = 1, max = 50, message = "El nombre del paciente debe tener entre 1 y 50 caracteres")
-    @Column(name = "paciente", nullable = false, length = 255)
+    @Column(name = "paciente", nullable = false, length = 50)
     private String paciente;
     
     /**

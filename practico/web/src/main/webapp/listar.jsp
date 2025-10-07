@@ -1,4 +1,4 @@
-<%@ page import="facultad.tse.practico.datatypes.*, java.util.List" %>
+<%@ page import="facultad.tse.practico.jpa.entities.*, java.util.List" %>
 <%@ page import="javax.naming.InitialContext" %>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,11 +25,10 @@
 		</div>
 
     <%
-      DTListaDocumentos dtlista = (DTListaDocumentos) request.getAttribute("documentos");
+      List<Documento> documentos = (List<Documento>) request.getAttribute("documentos");
       String res = (String) request.getAttribute("busqueda");
-    if (dtlista != null && res == null) {
+    if (documentos != null && res == null) {
     	
-      List<DTDocumento> documentos = dtlista.obtenerLista();
       if (!documentos.isEmpty()) {
       
     %>
@@ -44,7 +43,7 @@
           </thead>
           <tbody>
           <%
-            for (DTDocumento doc : documentos) {
+            for (Documento doc : documentos) {
           %>
               <tr>
                 <td><%= doc.getId() %></td>

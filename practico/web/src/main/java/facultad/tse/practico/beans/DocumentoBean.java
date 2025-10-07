@@ -1,6 +1,6 @@
 package facultad.tse.practico.beans;
 
-import facultad.tse.practico.datatypes.*;
+import facultad.tse.practico.jpa.entities.Documento;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
@@ -20,8 +20,8 @@ public class DocumentoBean implements Serializable {
     @EJB
     private DocumentoEJBLocal service;
 
-    private DTListaDocumentos documentos;
-    private DTDocumento resultado;
+    private List<Documento> documentos;
+    private Documento resultado;
     private String id;
     private String idBuscar;
     private String descripcion;
@@ -34,7 +34,7 @@ public class DocumentoBean implements Serializable {
     }
 
     // Getters y setters
-    public DTListaDocumentos getDocumentos() {
+    public List<Documento> getDocumentos() {
         return documentos;
     }
 
@@ -62,7 +62,7 @@ public class DocumentoBean implements Serializable {
         this.observaciones = observaciones;
     }
 
-    public DTDocumento getResultado() {
+    public Documento getResultado() {
         return resultado;
     }
 
@@ -108,7 +108,7 @@ public class DocumentoBean implements Serializable {
         if (documentos == null || idAVerificar == null) {
             return false;
         }
-        DTDocumento doc = service.buscarPorId(idAVerificar);
+        Documento doc = service.buscarPorId(idAVerificar);
         if (doc != null) 
         	return true;
         else return false;

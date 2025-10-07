@@ -1,8 +1,9 @@
 package facultad.tse.practico.ws;
 
 
-import facultad.tse.practico.datatypes.DTDocumento;
-import facultad.tse.practico.datatypes.DTListaDocumentos;
+import java.util.List;
+
+import facultad.tse.practico.jpa.entities.Documento;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
@@ -39,7 +40,7 @@ public class DocumentosREST  {
 	 	@GET
 	 	@Path("/documentos")
 	 	// Listar todos los documentos
-	 	public DTListaDocumentos listar() {
+	 	public List<Documento> listar() {
 	 	    return controladorLocal.listar(); 
 	 	}
 	    
@@ -47,7 +48,7 @@ public class DocumentosREST  {
 	 	@GET
 	 	@Path("/documentos/{nombre}")
 	 	// Buscar documentos por paciente
-	 	public DTDocumento buscarPorPaciente(@PathParam("nombre") String paciente) {
+	 	public Documento buscarPorPaciente(@PathParam("nombre") String paciente) {
 	 	    return controladorLocal.buscarPorPaciente(paciente); 
 	 	}
 	 	
@@ -55,7 +56,7 @@ public class DocumentosREST  {
 	    @GET
 	    @Path("/documentos/{id}")
 	 	// Buscar por ID
-	 	public DTDocumento buscarPorId(@PathParam("id") Integer id) {
+	 	public Documento buscarPorId(@PathParam("id") Integer id) {
 	 	    return controladorLocal.buscarPorId(id);
 	 	}
 }

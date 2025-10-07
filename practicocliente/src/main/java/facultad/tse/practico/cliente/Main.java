@@ -3,9 +3,9 @@ package facultad.tse.practico.cliente;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import facultad.tse.practico.cliente.NuevoDocumentoPanel;
+import facultad.tse.practico.jpa.entities.Documento;
 import facultad.tse.practico.ws.DocumentosSOAP;
 import facultad.tse.practico.ws.DocumentosSOAPService;
-import facultad.tse.practico.ws.DtListaDocumentos;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Invocation;
@@ -19,6 +19,7 @@ import javax.naming.NamingException;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.List;
 import java.util.Properties;
 
 public class Main extends JFrame {
@@ -173,12 +174,12 @@ public class Main extends JFrame {
     	return webservice.getDocumentosSOAPPort();
     }
     
-    private static DtListaDocumentos invokeRestWebService() {
+    private static List<Documento> invokeRestWebService() {
     	Client client = ClientBuilder.newClient();
     	WebTarget target = client.target("http://localhost:8080/practico-web/rest/clinica/documentos/");
     	Invocation invocation = target.request().buildGet();
     	Response response = invocation.invoke();
-    	DtListaDocumentos result = response.readEntity(new GenericType<DtListaDocumentos>(){});
+    	List<Documento> result = response.readEntity(new GenericType<List<Documento>>(){});
     	return result;
     }
 

@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="return" type="{http://ws.practico.tse.facultad/}dtDocumento" minOccurs="0"/&gt;
+ *         &lt;element name="return" type="{http://ws.practico.tse.facultad/}documento" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class BuscarPorIdResponse {
 
     @XmlElement(name = "return")
-    protected DtDocumento _return;
+    protected Documento _return;
 
     /**
      * Obtiene el valor de la propiedad return.
      * 
      * @return
      *     possible object is
-     *     {@link DtDocumento }
+     *     {@link Documento }
      *     
      */
-    public DtDocumento getReturn() {
+    public Documento getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class BuscarPorIdResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link DtDocumento }
+     *     {@link Documento }
      *     
      */
-    public void setReturn(DtDocumento value) {
+    public void setReturn(Documento value) {
         this._return = value;
     }
 

@@ -1,6 +1,8 @@
 package facultad.tse.practico.service;
 
-import facultad.tse.practico.datatypes.*;
+import java.util.List;
+
+import facultad.tse.practico.jpa.entities.Documento;
 import jakarta.ejb.Local;
 
 @Local
@@ -10,12 +12,12 @@ public interface DocumentoEJBLocal{
     public void agregar(String paciente, String descripcion, String observaciones);
 
     // Listar todos los documentos
-    public DTListaDocumentos listar();
+    public List<Documento> listar();
 
     // Buscar documentos por paciente
-    public DTDocumento buscarPorPaciente(String paciente);
+    public Documento buscarPorPaciente(String paciente);
 
     // Buscar por ID
-    public DTDocumento buscarPorId(Integer id);
+    public Documento buscarPorId(Integer id);
     
 }

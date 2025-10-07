@@ -30,8 +30,6 @@ public class ObjectFactory {
     private final static QName _BuscarPorIdResponse_QNAME = new QName("http://ws.practico.tse.facultad/", "buscarPorIdResponse");
     private final static QName _BuscarPorPaciente_QNAME = new QName("http://ws.practico.tse.facultad/", "buscarPorPaciente");
     private final static QName _BuscarPorPacienteResponse_QNAME = new QName("http://ws.practico.tse.facultad/", "buscarPorPacienteResponse");
-    private final static QName _DtDocumento_QNAME = new QName("http://ws.practico.tse.facultad/", "dtDocumento");
-    private final static QName _DtListaDocumentos_QNAME = new QName("http://ws.practico.tse.facultad/", "dtListaDocumentos");
     private final static QName _Listar_QNAME = new QName("http://ws.practico.tse.facultad/", "listar");
     private final static QName _ListarResponse_QNAME = new QName("http://ws.practico.tse.facultad/", "listarResponse");
 
@@ -91,22 +89,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DtDocumento }
-     * 
-     */
-    public DtDocumento createDtDocumento() {
-        return new DtDocumento();
-    }
-
-    /**
-     * Create an instance of {@link DtListaDocumentos }
-     * 
-     */
-    public DtListaDocumentos createDtListaDocumentos() {
-        return new DtListaDocumentos();
-    }
-
-    /**
      * Create an instance of {@link Listar }
      * 
      */
@@ -120,6 +102,22 @@ public class ObjectFactory {
      */
     public ListarResponse createListarResponse() {
         return new ListarResponse();
+    }
+
+    /**
+     * Create an instance of {@link Documento }
+     * 
+     */
+    public Documento createDocumento() {
+        return new Documento();
+    }
+
+    /**
+     * Create an instance of {@link LocalDateTime }
+     * 
+     */
+    public LocalDateTime createLocalDateTime() {
+        return new LocalDateTime();
     }
 
     /**
@@ -198,32 +196,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://ws.practico.tse.facultad/", name = "buscarPorPacienteResponse")
     public JAXBElement<BuscarPorPacienteResponse> createBuscarPorPacienteResponse(BuscarPorPacienteResponse value) {
         return new JAXBElement<BuscarPorPacienteResponse>(_BuscarPorPacienteResponse_QNAME, BuscarPorPacienteResponse.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DtDocumento }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link DtDocumento }{@code >}
-     */
-    @XmlElementDecl(namespace = "http://ws.practico.tse.facultad/", name = "dtDocumento")
-    public JAXBElement<DtDocumento> createDtDocumento(DtDocumento value) {
-        return new JAXBElement<DtDocumento>(_DtDocumento_QNAME, DtDocumento.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link DtListaDocumentos }{@code >}
-     * 
-     * @param value
-     *     Java instance representing xml element's value.
-     * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link DtListaDocumentos }{@code >}
-     */
-    @XmlElementDecl(namespace = "http://ws.practico.tse.facultad/", name = "dtListaDocumentos")
-    public JAXBElement<DtListaDocumentos> createDtListaDocumentos(DtListaDocumentos value) {
-        return new JAXBElement<DtListaDocumentos>(_DtListaDocumentos_QNAME, DtListaDocumentos.class, null, value);
     }
 
     /**

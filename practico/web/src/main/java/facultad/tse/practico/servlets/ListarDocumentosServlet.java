@@ -8,8 +8,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-import facultad.tse.practico.datatypes.*;
+import facultad.tse.practico.jpa.entities.Documento;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 
 /**
@@ -26,16 +27,15 @@ public class ListarDocumentosServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
     	String idParam = req.getParameter("id");
-    	DTListaDocumentos lista;
+    	List<Documento> lista = new ArrayList<>();
     	if (idParam != null && !idParam.isEmpty()) {
     		Integer id = Integer.parseInt(idParam);
-    		lista = new DTListaDocumentos();
-    		DTDocumento doc = docEJB.buscarPorId(id);
+    		Documento doc = docEJB.buscarPorId(id);
     		if (doc == null) {
     			req.setAttribute("busqueda", "no");
     		}
     			
-    		else lista.agregarDocumento(doc);
+    		else lista.add(doc);
     	}
     	else {
     		lista = docEJB.listar();

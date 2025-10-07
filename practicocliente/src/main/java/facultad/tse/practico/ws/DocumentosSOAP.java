@@ -1,6 +1,7 @@
 
 package facultad.tse.practico.ws;
 
+import java.util.List;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
@@ -27,38 +28,38 @@ public interface DocumentosSOAP {
      * 
      * @param arg0
      * @return
-     *     returns facultad.tse.practico.ws.DtDocumento
+     *     returns facultad.tse.practico.ws.Documento
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "buscarPorId", targetNamespace = "http://ws.practico.tse.facultad/", className = "facultad.tse.practico.ws.BuscarPorId")
     @ResponseWrapper(localName = "buscarPorIdResponse", targetNamespace = "http://ws.practico.tse.facultad/", className = "facultad.tse.practico.ws.BuscarPorIdResponse")
-    public DtDocumento buscarPorId(
+    public Documento buscarPorId(
         @WebParam(name = "arg0", targetNamespace = "")
         Integer arg0);
 
     /**
      * 
      * @return
-     *     returns facultad.tse.practico.ws.DtListaDocumentos
+     *     returns java.util.List<facultad.tse.practico.ws.Documento>
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "listar", targetNamespace = "http://ws.practico.tse.facultad/", className = "facultad.tse.practico.ws.Listar")
     @ResponseWrapper(localName = "listarResponse", targetNamespace = "http://ws.practico.tse.facultad/", className = "facultad.tse.practico.ws.ListarResponse")
-    public DtListaDocumentos listar();
+    public List<Documento> listar();
 
     /**
      * 
      * @param arg0
      * @return
-     *     returns facultad.tse.practico.ws.DtDocumento
+     *     returns facultad.tse.practico.ws.Documento
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "buscarPorPaciente", targetNamespace = "http://ws.practico.tse.facultad/", className = "facultad.tse.practico.ws.BuscarPorPaciente")
     @ResponseWrapper(localName = "buscarPorPacienteResponse", targetNamespace = "http://ws.practico.tse.facultad/", className = "facultad.tse.practico.ws.BuscarPorPacienteResponse")
-    public DtDocumento buscarPorPaciente(
+    public Documento buscarPorPaciente(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 

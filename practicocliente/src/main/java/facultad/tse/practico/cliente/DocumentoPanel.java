@@ -65,7 +65,7 @@ public class DocumentoPanel extends JPanel {
                 refrescarTabla();
                 return;
             }
-            DtDocumento doc = service.buscarPorId(Integer.parseInt(filtro));
+            Documento doc = service.buscarPorId(Integer.parseInt(filtro));
             if (doc != null) {
                 tableModel.addRow(new Object[]{
                         doc.getId(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones()
@@ -76,10 +76,9 @@ public class DocumentoPanel extends JPanel {
 
     private void refrescarTabla() {
         try {
-        	DtListaDocumentos docs = service.listar();
-            List<DtDocumento> documentos = docs.getDocumentos();
+        	List<Documento> documentos = service.listar();
             tableModel.setRowCount(0);
-            for (DtDocumento doc : documentos) {
+            for (Documento doc : documentos) {
                 tableModel.addRow(new Object[]{
                         doc.getId(), doc.getPaciente(), doc.getDescripcion(), doc.getObservaciones()
                 });
