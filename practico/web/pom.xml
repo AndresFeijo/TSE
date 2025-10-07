@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-                             http://maven.apache.org/maven-v4_0_0.xsd">
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,15 +18,14 @@
     <description>Web module (WAR) for WildFly deployment</description>
 
     <dependencies>
-    
-    	<dependency>
-		  <groupId>jakarta.xml.ws</groupId>
-		  <artifactId>jakarta.xml.ws-api</artifactId>
-		  <version>3.0.1</version>
-		  <scope>provided</scope>
-		</dependency>
 
-		
+        <dependency>
+            <groupId>jakarta.xml.ws</groupId>
+            <artifactId>jakarta.xml.ws-api</artifactId>
+            <version>3.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Dependencia del módulo EJB -->
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -75,6 +74,13 @@
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JMS API - NUEVO -->
+        <dependency>
+            <groupId>jakarta.jms</groupId>
+            <artifactId>jakarta.jms-api</artifactId>
             <scope>provided</scope>
         </dependency>
 

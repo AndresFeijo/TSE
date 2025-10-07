@@ -1,8 +1,9 @@
 package facultad.tse.practico.servlets;
 
 import java.io.IOException;
-import java.util.Random;
 
+import facultad.tse.practico.jms.DocumentoJMSProducer;
+import facultad.tse.practico.jpa.entities.Documento;
 import facultad.tse.practico.service.DocumentoEJBLocal;
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -11,26 +12,52 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-/**	
- * Servlet implementation class DocumentoServlet
+/**
+ * Servlet que maneja la creación de documentos.
+ * Ahora integrado con JMS para enviar notificaciones asíncronas.
  */
 @WebServlet("/DocumentoServlet")
 public class DocumentoServlet extends HttpServlet {
-    @EJB DocumentoEJBLocal service;
+    
+    private static final long serialVersionUID = 1L;
+    
+    @EJB 
+    private DocumentoEJBLocal service;
+    
+    @EJB
+    private DocumentoJMSProducer jmsProducer;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
         try {
+            // Obtener parámetros del formulario
             String descripcion = req.getParameter("descripcion");
             String paciente = req.getParameter("paciente");
             String observaciones = req.getParameter("observaciones");
 
+            // Guardar el documento en la base de datos
             service.agregar(paciente, descripcion, observaciones);
+            Documento documentoCreado = service.buscarPorPaciente(paciente);
+            
+            // *** NUEVO: Enviar mensaje JMS ***
+            if (documentoCreado != null && documentoCreado.getId() != null) {
+                jmsProducer.enviarMensaje(
+                    documentoCreado.getId(),
+                    paciente,
+                    descripcion,
+                    observaciones,
+                    "CREADO"
+                );
+                System.out.println("✓ Mensaje JMS enviado para documento ID: " + documentoCreado.getId());
+            }
 
-            // si todo sale bien → redirige al listado
+            // Redirigir al listado
             resp.sendRedirect("ListarDocumentosServlet");
+            
         } catch (Exception e) {
-            // redirigir a una página de error o mostrar mensaje
+            // Manejar error
+            e.printStackTrace();
             req.setAttribute("error", "No se pudo guardar el documento: " + e.getMessage());
             req.getRequestDispatcher("/error.jsp").forward(req, resp);
         }
